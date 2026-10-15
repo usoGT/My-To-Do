@@ -45,7 +45,7 @@ jobs:
   android:
     name: Android (APK)
     needs: testler
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
     steps:
@@ -54,7 +54,6 @@ jobs:
         with: { node-version: 22, cache: npm }
       - uses: actions/setup-java@v5
         with: { distribution: temurin, java-version: '21' }
-      - uses: android-actions/setup-android@v3
       - run: npm ci
         env: { ELECTRON_SKIP_BINARY_DOWNLOAD: '1' }
       - run: npm run build:web && npx cap sync android

@@ -1,0 +1,10 @@
+/* Ayarlar sayfası */
+.settings { display: flex; flex-direction: column; gap: var(--space-4); max-width: 760px; }
+.settings .card-header { margin-bottom: var(--space-3); }
+.settings .card-header svg { width: 18px; height: 18px; color: var(--text-muted); }
+.settings h3 { font-size: var(--text-sm); }
+.settings .row-between > div { min-width: 0; flex: 1 1 260px; }
+.shortcut-list { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2) var(--space-4); align-items: center; font-size: var(--text-sm); }
+.about-list { display: grid; grid-template-columns: 120px 1fr; gap: var(--space-2) var(--space-4); margin: 0; }
+.about-list dt { color: var(--text-muted); }
+.about-list dd { margin: 0; }

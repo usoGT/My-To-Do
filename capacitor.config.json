@@ -1,0 +1,21 @@
+{
+  "appId": "com.planlayici.app",
+  "appName": "My to do",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#F6F6F3"
+  },
+  "android": {
+    "backgroundColor": "#F6F6F3"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_planlayici",
+      "iconColor": "#4F46E5"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+node_modules/
+.vscode/
+www/
+dist/
+release/
+ios/App/build/
+ios/DerivedData/
+android/.gradle/
+android/app/build/
+android/build/
+*.keystore

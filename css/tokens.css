@@ -1,0 +1,129 @@
+/* Tasarım değişkenleri: tüm renkler, boşluklar ve yazı boyutları buradan gelir. */
+
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #F6F6F3;
+  --surface: #FFFFFF;
+  --surface-2: #F0F0EC;
+  --surface-3: #E8E8E3;
+  --text: #1C1F24;
+  --text-muted: #6A707A;
+  --text-faint: #757B85;
+  --border: #E3E3DE;
+  --border-strong: #CFCFC8;
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+  --primary-soft: #EEF0FF;
+  --primary-text: #FFFFFF;
+  --success: #15803D;
+  --success-soft: #E8F7EE;
+  --warning: #B45309;
+  --warning-soft: #FEF3E2;
+  --danger: #DC2626;
+  --danger-soft: #FDECEC;
+  --overlay: rgba(20, 22, 28, 0.45);
+  --focus-ring: rgba(79, 70, 229, 0.45);
+
+  /* Ders renkleri */
+  --course-indigo: #4F46E5;  --course-indigo-soft: #EEF0FF;
+  --course-blue: #2563EB;    --course-blue-soft: #E8F0FE;
+  --course-teal: #0F766E;    --course-teal-soft: #E3F6F4;
+  --course-green: #15803D;   --course-green-soft: #E8F7EE;
+  --course-amber: #A16207;   --course-amber-soft: #FDF5E1;
+  --course-orange: #C2410C;  --course-orange-soft: #FDEEE5;
+  --course-red: #B91C1C;     --course-red-soft: #FDECEC;
+  --course-pink: #BE185D;    --course-pink-soft: #FCE8F2;
+
+  /* Isı haritası seviyeleri */
+  --heat-0: #EBEBE6;
+  --heat-1: #C7C4F7;
+  --heat-2: #9C96F0;
+  --heat-3: #6E66E8;
+  --heat-4: #4338CA;
+
+  --shadow-1: 0 1px 2px rgba(20, 22, 28, 0.06), 0 1px 1px rgba(20, 22, 28, 0.04);
+  --shadow-2: 0 8px 24px rgba(20, 22, 28, 0.12), 0 2px 6px rgba(20, 22, 28, 0.06);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0F1115;
+  --surface: #171A21;
+  --surface-2: #1E222B;
+  --surface-3: #272C37;
+  --text: #E7E9EC;
+  --text-muted: #9BA3AE;
+  --text-faint: #868E9B;
+  --border: #2A2F3A;
+  --border-strong: #3A4150;
+  --primary: #8B85F8;
+  --primary-hover: #A29DFA;
+  --primary-soft: #25243F;
+  --primary-text: #0F1115;
+  --success: #4ADE80;
+  --success-soft: #16301F;
+  --warning: #FBBF24;
+  --warning-soft: #33280F;
+  --danger: #F87171;
+  --danger-soft: #3A1C1C;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --focus-ring: rgba(139, 133, 248, 0.55);
+
+  --course-indigo: #8B85F8;  --course-indigo-soft: #25243F;
+  --course-blue: #60A5FA;    --course-blue-soft: #172A42;
+  --course-teal: #2DD4BF;    --course-teal-soft: #113330;
+  --course-green: #4ADE80;   --course-green-soft: #16301F;
+  --course-amber: #FBBF24;   --course-amber-soft: #33280F;
+  --course-orange: #FB923C;  --course-orange-soft: #36220F;
+  --course-red: #F87171;     --course-red-soft: #3A1C1C;
+  --course-pink: #F472B6;    --course-pink-soft: #3A1A2C;
+
+  --heat-0: #222731;
+  --heat-1: #33316A;
+  --heat-2: #4C47A3;
+  --heat-3: #6E66E8;
+  --heat-4: #A29DFA;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 10px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+:root {
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 48px;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 28px;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+
+  --sidebar-w: 240px;
+  --topbar-h: 60px;
+  --bottombar-h: 64px;
+  --content-max: 1100px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --dur: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0ms; }
+}

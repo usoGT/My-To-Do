@@ -1,0 +1,121 @@
+# Uygulamaları derler: Android APK, Mac (.dmg), Windows (.exe) ve iOS derleme kontrolü.
+# Her main dalına gönderimde ve elle ("Run workflow") çalışır. Çıktılar: çalışmanın altındaki "Artifacts".
+name: Uygulamaları derle
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: uygulamalar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  testler:
+    name: Testler
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+        env: { ELECTRON_SKIP_BINARY_DOWNLOAD: '1' }
+      - name: Masaüstü dosya sunucusu testleri
+        run: npm run test:electron
+      - name: Tarayıcı testleri (tests/tests.html)
+        run: |
+          python3 -m http.server 5599 >/dev/null 2>&1 &
+          sleep 1
+          cat > /tmp/run-tests.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const b = await chromium.launch();
+          const p = await b.newPage();
+          await p.goto('http://127.0.0.1:5599/tests/tests.html');
+          await p.waitForFunction('window.__testsDone === true', null, { timeout: 30000 });
+          const r = await p.evaluate('window.__testResults');
+          const fail = r.filter((x) => !x.ok);
+          console.log(`${r.length - fail.length}/${r.length} geçti`);
+          for (const f of fail) console.log('HATA:', f.name, '-', f.error);
+          await b.close();
+          process.exit(fail.length ? 1 : 0);
+          JS
+          cd /tmp && npm init -y >/dev/null && npm i playwright@1.56.1 >/dev/null && npx playwright install --with-deps chromium && node /tmp/run-tests.mjs
+
+  android:
+    name: Android (APK)
+    needs: testler
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
+      - uses: actions/setup-java@v5
+        with: { distribution: temurin, java-version: '21' }
+      - uses: android-actions/setup-android@v3
+      - run: npm ci
+        env: { ELECTRON_SKIP_BINARY_DOWNLOAD: '1' }
+      - run: npm run build:web && npx cap sync android
+      - name: Debug APK
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - name: İmzalı release APK (secret'lar tanımlıysa)
+        if: env.HAS_KEYSTORE == 'true'
+        env:
+          KS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          PLANLAYICI_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          PLANLAYICI_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          PLANLAYICI_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        working-directory: android
+        run: |
+          echo "$KS" | base64 -d > "$RUNNER_TEMP/planlayici.keystore"
+          PLANLAYICI_KEYSTORE="$RUNNER_TEMP/planlayici.keystore" ./gradlew assembleRelease --no-daemon
+          cp app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/MyToDo-release.apk
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/MyToDo-debug.apk
+      - uses: actions/upload-artifact@v5
+        with:
+          name: MyToDo-android
+          path: android/app/build/outputs/apk/MyToDo-*.apk
+
+  ios:
+    name: iOS (derleme kontrolü)
+    needs: testler
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+        env: { ELECTRON_SKIP_BINARY_DOWNLOAD: '1' }
+      - run: npm run build:web && npx cap sync ios
+      - name: Simülatör için derle (imzasız)
+        run: |
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build | tail -n 30
+
+  masaustu:
+    name: Masaüstü (${{ matrix.ad }})
+    needs: testler
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-latest, ad: Mac, komut: 'npx electron-builder --mac --publish never', cikti: 'release/*.dmg' }
+          - { os: windows-latest, ad: Windows, komut: 'npx electron-builder --win --publish never', cikti: 'release/*.exe' }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run build:web
+      - run: ${{ matrix.komut }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v5
+        with:
+          name: MyToDo-${{ matrix.ad }}
+          path: ${{ matrix.cikti }}

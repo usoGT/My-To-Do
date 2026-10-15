@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F6F6F3">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="My to do">
+  <meta name="description" content="Öğrenciler için görev, rutin, ders programı ve not planlayıcısı.">
+  <title>My to do</title>
+  <script>
+    // Beyaz yanıp sönmeyi önlemek için tema, sayfa çizilmeden önce uygulanır (tek satır içi betik).
+    (function () {
+      try {
+        var d = JSON.parse(localStorage.getItem('planlayici-data') || '{}');
+        var p = (d.settings && d.settings.theme) || 'system';
+        var dark = p === 'dark' || (p === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/settings.css">
+  <link rel="stylesheet" href="css/pages/schedule.css">
+  <link rel="stylesheet" href="css/pages/today.css">
+  <link rel="stylesheet" href="css/pages/routines.css">
+  <link rel="stylesheet" href="css/pages/planner.css">
+  <link rel="stylesheet" href="css/pages/course-notes.css">
+  <link rel="stylesheet" href="css/pages/course.css">
+  <link rel="stylesheet" href="css/pages/pomodoro.css">
+  <link rel="stylesheet" href="css/pages/quick-notes.css">
+  <link rel="stylesheet" href="css/pages/reports.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Kenar çubuğu"></aside>
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <div class="main-col">
+      <header class="topbar" id="topbar"></header>
+      <main class="content" id="page" tabindex="-1"></main>
+    </div>
+    <nav class="bottombar" id="bottombar" aria-label="Alt menü"></nav>
+  </div>
+  <noscript>My to do'nun çalışması için JavaScript gerekli.</noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

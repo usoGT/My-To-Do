@@ -1,0 +1,36 @@
+/* Rutinler (ve Bugün'deki rutin listesi) */
+.routine-check-list { display: flex; flex-direction: column; }
+.routine-check { display: flex; align-items: center; gap: var(--space-3); padding: 10px var(--space-2); }
+.routine-check + .routine-check { border-top: 1px solid var(--border); }
+.routine-check .check { border-color: var(--c); }
+.routine-check .check[aria-checked="true"] { background: var(--c); border-color: var(--c); }
+.routine-check .check:disabled { opacity: 0.4; cursor: not-allowed; }
+.routine-check-title { font-size: 15px; overflow-wrap: anywhere; }
+.routine-check.is-done .routine-check-title { color: var(--text-faint); text-decoration: line-through; }
+
+.streak { display: inline-flex; align-items: center; gap: 2px; color: var(--warning); font-weight: 700; font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+.streak svg { width: 16px; height: 16px; }
+.streak--big { font-size: 22px; }
+.streak--big svg { width: 20px; height: 20px; }
+
+.routine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-3); }
+.routine-card { display: flex; flex-direction: column; gap: var(--space-3); border-top: 3px solid var(--c); }
+.routine-card.is-archived { opacity: 0.7; }
+.routine-card-top { display: flex; align-items: flex-start; gap: var(--space-2); }
+.routine-days { display: flex; gap: 3px; margin: 6px 0 4px; }
+.routine-days span { font-size: 10px; font-weight: 600; padding: 1px 4px; border-radius: 4px; color: var(--text-faint); background: var(--surface-2); }
+.routine-days span.on { color: var(--c); background: var(--c-soft); }
+.routine-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); padding: var(--space-2) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.routine-stats > div { display: flex; flex-direction: column; align-items: flex-start; }
+.routine-stats strong { font-size: 22px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+
+.mini-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; max-width: 260px; }
+.mini-cal-head { font-size: 10px; text-align: center; color: var(--text-faint); font-weight: 600; }
+.mini-cal-cell { aspect-ratio: 1; min-height: 22px; border-radius: 5px; border: 0; padding: 0; background: var(--surface-2); }
+.mini-cal-cell.planned { background: transparent; box-shadow: inset 0 0 0 1.5px var(--border-strong); }
+.mini-cal-cell.missed { background: transparent; box-shadow: inset 0 0 0 1.5px var(--c); opacity: 0.6; }
+.mini-cal-cell.done { background: var(--c); }
+.mini-cal-cell.off { opacity: 0.5; }
+.mini-cal-cell.is-today { outline: 2px solid var(--text); outline-offset: 1px; }
+.mini-cal-cell:disabled { cursor: default; opacity: 0.25; }
+.mini-cal-cell:not(:disabled):hover { filter: brightness(0.92); }

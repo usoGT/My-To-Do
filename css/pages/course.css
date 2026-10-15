@@ -1,0 +1,31 @@
+/* Ders sayfası */
+.course-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-6);
+  margin-bottom: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--c-soft);
+  border: 1px solid color-mix(in srgb, var(--c) 25%, transparent);
+}
+.course-hero h1 { color: var(--c); }
+.course-hero-code { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c); opacity: 0.8; }
+.course-hero-meta { color: var(--text-muted); margin-top: 2px; }
+.course-hero-next { display: flex; align-items: center; gap: 6px; margin-top: var(--space-3); font-size: var(--text-sm); }
+.course-hero-next svg { width: 16px; height: 16px; color: var(--c); }
+.course-stats { margin-bottom: var(--space-6); }
+.course-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); gap: var(--space-6); align-items: start; }
+.course-main > .section + .section, .course-side > .section + .section { margin-top: var(--space-6); }
+@media (max-width: 960px) { .course-grid { grid-template-columns: 1fr; } }
+.course-notes { display: flex; flex-direction: column; }
+.course-note { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2); border-radius: var(--radius-sm); color: var(--text); }
+.course-note:hover { background: var(--surface-2); text-decoration: none; }
+.course-note .grow { display: flex; flex-direction: column; min-width: 0; }
+.course-note strong { font-size: var(--text-sm); }
+.course-notes li + li { border-top: 1px solid var(--border); }
+.course-hours { display: flex; flex-direction: column; margin-bottom: 4px; }
+.course-hours button { display: grid; grid-template-columns: 90px auto 1fr; gap: var(--space-2); align-items: center; width: 100%; padding: 8px var(--space-2); border: 0; border-radius: var(--radius-sm); background: none; text-align: left; font-size: var(--text-sm); color: var(--text); }
+.course-hours button:hover { background: var(--surface-2); }
+.course-hours-day { font-weight: 600; }

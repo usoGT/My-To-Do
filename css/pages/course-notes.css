@@ -1,0 +1,75 @@
+/* Ders Notları sayfası */
+.notes-layout { display: grid; grid-template-columns: 200px 300px minmax(0, 1fr); gap: var(--space-4); align-items: start; }
+.notes-courses-list { display: flex; flex-direction: column; gap: 2px; position: sticky; top: calc(var(--topbar-h) + var(--space-4)); }
+.notes-course { display: flex; align-items: center; gap: var(--space-2); min-height: 36px; padding: 0 var(--space-3); border: 0; border-radius: var(--radius-sm); background: none; color: var(--text-muted); font-size: var(--text-sm); text-align: left; }
+.notes-course:hover { background: var(--surface-2); color: var(--text); }
+.notes-course.is-active { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
+.notes-course .count { font-size: var(--text-xs); color: var(--text-faint); }
+.notes-course-select { display: none; }
+
+.notes-list-col { padding: var(--space-3); display: flex; flex-direction: column; gap: var(--space-3); max-height: calc(100dvh - var(--topbar-h) - 140px); overflow: hidden; position: sticky; top: calc(var(--topbar-h) + var(--space-4)); }
+.notes-list-col > [data-region="list"] { overflow-y: auto; margin: 0 calc(var(--space-3) * -1); padding: 0 var(--space-3); }
+.notes-search { display: flex; align-items: center; gap: var(--space-2); height: 36px; padding: 0 var(--space-3); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface); }
+.notes-search:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
+.notes-search svg { width: 16px; height: 16px; color: var(--text-faint); }
+.notes-search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font-size: var(--text-sm); }
+.notes-empty { padding: var(--space-3) var(--space-1); }
+.notes-list { display: flex; flex-direction: column; gap: 2px; }
+.note-row { display: flex; flex-direction: column; gap: 2px; width: 100%; padding: var(--space-2) var(--space-3); border: 0; border-radius: var(--radius-sm); background: none; text-align: left; color: var(--text); }
+.note-row:hover { background: var(--surface-2); }
+.note-row.is-active { background: var(--primary-soft); }
+.note-row-title { font-weight: 600; font-size: var(--text-sm); }
+.note-row-preview { font-size: var(--text-xs); color: var(--text-muted); }
+.note-row-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-faint); min-width: 0; }
+.note-row-meta svg { width: 12px; height: 12px; }
+.note-row-meta .dot { width: 6px; height: 6px; }
+
+.notes-editor-col { padding: var(--space-4); min-height: 420px; }
+.notes-editor-col > .empty { border: 0; }
+.note-editor { position: relative; display: flex; flex-direction: column; gap: var(--space-3); }
+.note-editor-top { display: flex; align-items: center; gap: var(--space-2); }
+.note-course { flex: 0 1 240px; min-width: 0; }
+.note-course .select { min-height: 32px; padding-top: 4px; padding-bottom: 4px; }
+.note-status { margin-left: auto; }
+.notes-back { display: none; }
+.note-title-input { width: 100%; border: 0; background: none; outline: none; font-size: 24px; font-weight: 700; padding: 4px 0; color: var(--text); }
+.note-title-input::placeholder { color: var(--text-faint); }
+.note-body-input { width: 100%; min-height: 320px; border: 0; background: none; outline: none; resize: vertical; font-size: 15px; line-height: 1.65; color: var(--text); padding: 0; }
+.note-body-input::placeholder { color: var(--text-faint); }
+.note-attachments { border-top: 1px solid var(--border); padding-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-3); }
+.note-attachments-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.note-attachments-head svg { width: 14px; height: 14px; display: inline; vertical-align: -2px; }
+.btn.is-disabled { opacity: 0.5; pointer-events: none; }
+.att-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--space-2); }
+.att-card { position: relative; }
+.att-open { display: flex; flex-direction: column; gap: 4px; width: 100%; padding: var(--space-2); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); text-align: left; color: var(--text); }
+.att-open:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.att-thumb { display: grid; place-items: center; height: 80px; border-radius: 4px; background: var(--surface-2); color: var(--text-faint); overflow: hidden; }
+.att-thumb svg { width: 28px; height: 28px; }
+.att-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.att-thumb--pdf { color: var(--danger); gap: 2px; font-size: 11px; font-weight: 700; align-content: center; }
+.att-name { font-size: var(--text-xs); font-weight: 550; }
+.att-del { position: absolute; top: 4px; right: 4px; background: var(--surface); box-shadow: var(--shadow-1); }
+.note-drop { display: none; position: absolute; inset: -8px; border: 2px dashed var(--primary); border-radius: var(--radius); background: color-mix(in srgb, var(--primary-soft) 85%, transparent); color: var(--primary); font-weight: 600; place-items: center; z-index: 5; pointer-events: none; }
+.note-drop svg { width: 28px; height: 28px; margin: 0 auto 6px; }
+.note-editor.is-dragover .note-drop { display: grid; }
+
+@media (max-width: 1080px) {
+  .notes-layout { grid-template-columns: 260px minmax(0, 1fr); }
+  .notes-courses { grid-column: 1 / -1; }
+  .notes-courses-list { display: none; }
+  .notes-course-select { display: block; max-width: 320px; }
+}
+@media (max-width: 767px) {
+  .notes-layout { grid-template-columns: 1fr; }
+  .notes-list-col { position: static; max-height: none; }
+  .notes-layout.has-note .notes-courses,
+  .notes-layout.has-note .notes-list-col { display: none; }
+  .notes-layout:not(.has-note) .notes-editor-col { display: none; }
+  .notes-layout.has-note ~ * { display: none; }
+  .notes-back { display: inline-flex; }
+  .notes-editor-col { padding: var(--space-3); }
+  .note-course { flex-basis: 150px; }
+  .note-body-input { min-height: 50dvh; }
+}
+.att-viewer { width: 100%; height: auto; max-height: 75dvh; object-fit: contain; border-radius: var(--radius-sm); }
